@@ -1,6 +1,8 @@
 from tkinter import *
 import tensorflow as tf
-from PIL import ImageGrab
+from PIL import ImageGrab, Image
+import numpy as np
+import tensorflow_datasets as tfds
 
 
 class Paint(object):
@@ -76,13 +78,25 @@ class Paint(object):
         y = self.root.winfo_rooty() + self.c.winfo_y()
         x1 = x + self.c.winfo_width()
         y1 = y + self.c.winfo_height()
-        
-        ImageGrab.grab().crop((x, y, x1, y1)).save('.\\imgaes_to_recognize\\img.png')
+
+        ImageGrab.grab().crop((x, y, x1, y1)).resize(
+            (28, 28)).save('.\\imgaes_to_recognize\\img.png')
+
+    def normalize_img(self, image):
+        """Normalizes images: `uint8` -> `float32`."""
+        return tf.cast(image, tf.float32) / 255.
 
     def recognize(self):
         model = tf.keras.models.load_model('paint_percep')
 
         self.save_image()
+        image = np.array(Image.open('.\\imgaes_to_recognize\\img.png'))
+        image = self.normalize_img(image)[np.newaxis, ...]
+        
+        result = model.predict(image[:, :, :, 0])
+        result = np.argmax(result[0], axis=-1)
+
+        self.lbl.config(text='Result: ' + str(int(result)))
 
 
 if __name__ == '__main__':
