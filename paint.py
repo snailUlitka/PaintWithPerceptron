@@ -1,5 +1,6 @@
 from tkinter import *
 import tensorflow as tf
+from PIL import ImageGrab
 
 
 class Paint(object):
@@ -67,8 +68,18 @@ class Paint(object):
     def reset(self, event):
         self.old_x, self.old_y = None, None
 
+    def save_image(self):
+        x = self.root.winfo_rootx() + self.c.winfo_x()
+        y = self.root.winfo_rooty() + self.c.winfo_y()
+        x1 = x + self.c.winfo_width()
+        y1 = y + self.c.winfo_height()
+        
+        ImageGrab.grab().crop((x, y, x1, y1)).save('.\\imgaes_to_recognize\\img.png')
+
     def recognize(self):
         model = tf.keras.models.load_model('paint_percep')
+
+        self.save_image()
 
 
 if __name__ == '__main__':
