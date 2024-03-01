@@ -29,6 +29,9 @@ class Paint(object):
         self.c = Canvas(self.root, bg='white', width=600, height=600)
         self.c.grid(row=1, columnspan=5)
 
+        self.lbl = Label(text="Result: ...")
+        self.lbl.grid(row=2, column=2)
+
         self.setup()
         self.root.mainloop()
 
