@@ -2,7 +2,6 @@ from tkinter import *
 import tensorflow as tf
 from PIL import ImageGrab, Image
 import numpy as np
-import tensorflow_datasets as tfds
 
 
 class Paint(object):
