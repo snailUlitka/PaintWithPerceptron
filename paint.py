@@ -1,4 +1,5 @@
 from tkinter import *
+import tensorflow as tf
 
 
 class Paint(object):
@@ -67,7 +68,8 @@ class Paint(object):
         self.old_x, self.old_y = None, None
 
     def recognize(self):
-        pass
+        model = tf.keras.models.load_model('paint_percep')
+
 
 if __name__ == '__main__':
     Paint()
