@@ -9,12 +9,20 @@ class Paint(object):
     def __init__(self):
         self.root = Tk()
 
-        self.pen_button = Button(self.root, text='pen', command=self.use_pen)
+        self.pen_button = Button(
+            self.root, text='Pen', command=self.use_pen
+        )
         self.pen_button.grid(row=0, column=0)
 
         self.eraser_button = Button(
-            self.root, text='eraser', command=self.use_eraser)
-        self.eraser_button.grid(row=0, column=4)
+            self.root, text='Eraser', command=self.use_eraser
+        )
+        self.eraser_button.grid(row=0, column=2)
+
+        self.recognize_button = Button(
+            self.root, text='Recognize', command=self.recognize
+        )
+        self.recognize_button.grid(row=0, column=4)
 
         self.c = Canvas(self.root, bg='white', width=600, height=600)
         self.c.grid(row=1, columnspan=5)
@@ -58,6 +66,8 @@ class Paint(object):
     def reset(self, event):
         self.old_x, self.old_y = None, None
 
+    def recognize(self):
+        pass
 
 if __name__ == '__main__':
     Paint()
